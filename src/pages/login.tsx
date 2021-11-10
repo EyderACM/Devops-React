@@ -5,20 +5,23 @@ import TextField from '@mui/material/TextField'
 import Link from 'next/link'
 import Grid from '@mui/material/Grid'
 import Box from '@mui/material/Box'
+import { useForm, Controller } from 'react-hook-form'
 import Typography from '@mui/material/Typography'
 import Container from '@mui/material/Container'
 import paths from 'routes/paths'
 
 export default function SignIn() {
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault()
-    const data = new FormData(event.currentTarget)
-    // eslint-disable-next-line no-console
-    console.log({
-      email: data.get('email'),
-      password: data.get('password'),
+  const { control, handleSubmit, reset } = useForm()
+
+  const onSubmit = handleSubmit(async (data) => {
+    const result = await fetch('/api/login', {
+      method: 'post',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(data),
     })
-  }
+    const rawResult = await result.json()
+    console.log(rawResult)
+  })
 
   return (
     <Container component="main" maxWidth="xs">
@@ -35,26 +38,42 @@ export default function SignIn() {
         <Typography component="h1" variant="h5">
           ¡Bienvenido!
         </Typography>
-        <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
-          <TextField
-            margin="normal"
-            required
-            fullWidth
-            id="email"
-            label="Email Address"
-            name="email"
-            autoComplete="email"
-            autoFocus
+        <Box component="form" onSubmit={onSubmit} noValidate sx={{ mt: 1 }}>
+          <Controller
+            name="username"
+            control={control}
+            key="username"
+            render={({ field }) => (
+              <TextField
+                {...field}
+                margin="normal"
+                required
+                fullWidth
+                id="username"
+                label="Nombre de usuario"
+                name="text"
+                autoComplete="text"
+                autoFocus
+              />
+            )}
           />
-          <TextField
-            margin="normal"
-            required
-            fullWidth
+          <Controller
             name="password"
-            label="Password"
-            type="password"
-            id="password"
-            autoComplete="current-password"
+            control={control}
+            key="password"
+            render={({ field }) => (
+              <TextField
+                {...field}
+                margin="normal"
+                required
+                fullWidth
+                name="Contraseña"
+                label="Password"
+                type="password"
+                id="password"
+                autoComplete="current-password"
+              />
+            )}
           />
           <Button
             type="submit"
