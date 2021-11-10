@@ -1,7 +1,6 @@
 import { withIronSessionApiRoute } from 'iron-session/next'
 import { sessionOptions } from 'lib/session'
 import { NextApiRequest, NextApiResponse } from 'next'
-import { User } from './user'
 
 export default withIronSessionApiRoute(loginRoute, sessionOptions)
 
@@ -9,7 +8,7 @@ async function loginRoute(req: NextApiRequest, res: NextApiResponse) {
   const { username, email } = await req.body
 
   try {
-    const user = await fetch('http://0.0.0.0:8080/api/auth/login', {
+    const user = await fetch('http://0.0.0.0:8080/api/auth/signup', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ username, email }),
