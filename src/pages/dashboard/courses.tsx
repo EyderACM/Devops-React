@@ -11,6 +11,7 @@ import Courses from 'components/molecules/Courses'
 import { useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup/dist/yup'
 import CourseDialog from 'components/organisms/CoursesDialog'
+import DeleteDialog from 'components/organisms/DeleteDialog'
 import requiredString from 'utils/functions/requiredString'
 import useAuthenticatedSWR from 'hooks/useAuthenticatedSWR'
 
@@ -42,7 +43,9 @@ function CoursesDashboard({
     path: 'courses',
     token: authorization,
   })
-  const [open, setOpen] = useState<boolean>(false)
+  const [openCourseDialog, setOpenCourseDialog] = useState<boolean>(false)
+  const [openDeleteDialog, setOpenDeleteDialog] = useState<boolean>(false)
+  const [isDeletingCourse, setIsDeletingCourse] = useState<boolean>(false)
   const {
     control,
     handleSubmit,
@@ -53,11 +56,11 @@ function CoursesDashboard({
   })
 
   useEffect(() => {
-    if (open === false) {
+    if (openCourseDialog === false) {
       reset({})
       setEditedId(undefined)
     }
-  }, [open])
+  }, [openCourseDialog])
 
   const onSubmit = handleSubmit(async (data) => {
     const method = editedId ? 'PUT' : 'POST'
@@ -74,14 +77,14 @@ function CoursesDashboard({
       body: JSON.stringify(data),
     })
     mutate()
-    setOpen(false)
+    setOpenCourseDialog(false)
     reset({})
   })
 
-  const onClickCourse = (id: number) => async () => {
+  const onClickCourse = (id: number) => async (e: any) => {
     reset({})
     setEditedId(id)
-    setOpen(true)
+    setOpenCourseDialog(true)
     const rawCourse = await fetch(`http://localhost:8080/api/courses/${id}`, {
       method: 'GET',
       headers: {
@@ -93,11 +96,38 @@ function CoursesDashboard({
     reset(course)
   }
 
+  const onOpenDeleteCourseDialog = (id: number) => async (e: any) => {
+    e.stopPropagation()
+    setEditedId(id)
+    setOpenDeleteDialog(true)
+  }
+
+  const onDeleteCourse = async () => {
+    setIsDeletingCourse(true)
+    await fetch(`http://localhost:8080/api/courses/${editedId}`, {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json',
+        authorization: `Bearer ${authorization}` || '',
+      },
+    })
+    setIsDeletingCourse(false)
+    setOpenDeleteDialog(false)
+    setEditedId(undefined)
+    mutate()
+  }
+
   return (
     <Fragment>
+      <DeleteDialog
+        open={openDeleteDialog}
+        setOpen={setOpenDeleteDialog}
+        onSubmit={onDeleteCourse}
+        isSubmitting={isDeletingCourse}
+      />
       <CourseDialog
-        open={open}
-        setOpen={setOpen}
+        open={openCourseDialog}
+        setOpen={setOpenCourseDialog}
         formControl={control}
         onSubmit={onSubmit}
         errors={errors}
@@ -108,12 +138,19 @@ function CoursesDashboard({
         <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
           <Grid item xs={12}>
             <Grid container sx={{ pb: 2 }}>
-              <Button variant="contained" onClick={() => setOpen(true)}>
+              <Button
+                variant="contained"
+                onClick={() => setOpenCourseDialog(true)}
+              >
                 Crear
               </Button>
             </Grid>
             <Paper sx={{ p: 2, display: 'flex', flexDirection: 'column' }}>
-              <Courses courses={courses!} onRowClick={onClickCourse} />
+              <Courses
+                courses={courses!}
+                onRowClick={onClickCourse}
+                onRowDelete={onOpenDeleteCourseDialog}
+              />
             </Paper>
           </Grid>
         </Container>

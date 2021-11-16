@@ -1,5 +1,5 @@
 import * as React from 'react'
-import Link from '@mui/material/Link'
+import DeleteIcon from '@mui/icons-material/Delete'
 import Table from '@mui/material/Table'
 import TableBody from '@mui/material/TableBody'
 import TableCell from '@mui/material/TableCell'
@@ -7,15 +7,15 @@ import TableHead from '@mui/material/TableHead'
 import TableRow from '@mui/material/TableRow'
 import { Course } from 'pages/dashboard/courses'
 import Title from '../atoms/Title'
-import { CircularProgress, Grid } from '@mui/material'
+import { CircularProgress, Grid, IconButton } from '@mui/material'
 
-export default function Courses({
-  courses,
-  onRowClick,
-}: {
+interface ICourse {
   courses: Course[]
-  onRowClick: (id: number) => () => void
-}) {
+  onRowClick: (id: number) => (e: any) => void
+  onRowDelete: (id: number) => (e: any) => void
+}
+
+export default function Courses({ courses, onRowClick, onRowDelete }: ICourse) {
   return (
     <React.Fragment>
       <Title>Cursos</Title>
@@ -44,6 +44,11 @@ export default function Courses({
                 <TableCell>{row.professorName}</TableCell>
                 <TableCell>{row.classRoomCode}</TableCell>
                 <TableCell>{row.hasProjector ? 'Sí' : 'No'}</TableCell>
+                <TableCell>
+                  <IconButton onClick={onRowDelete(row.id)} sx={{ zIndex: 10 }}>
+                    <DeleteIcon color="action" />
+                  </IconButton>
+                </TableCell>
               </TableRow>
             ))}
           </TableBody>
