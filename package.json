@@ -11,6 +11,7 @@
     "@emotion/react": "^11.5.0",
     "@emotion/styled": "^11.3.0",
     "@fontsource/roboto": "^4.5.1",
+    "@hookform/resolvers": "^2.8.3",
     "@mui/icons-material": "^5.1.0",
     "@mui/material": "^5.1.0",
     "iron-session": "^6.0.2",

@@ -5,55 +5,55 @@ import TableBody from '@mui/material/TableBody'
 import TableCell from '@mui/material/TableCell'
 import TableHead from '@mui/material/TableHead'
 import TableRow from '@mui/material/TableRow'
+import { Course } from 'pages/dashboard/courses'
 import Title from '../atoms/Title'
-
-// Generate Order Data
-function createData(
-  id: number,
-  course: string,
-  courseName: string,
-  studentAmount: number,
-) {
-  return { id, course, courseName, studentAmount }
-}
-
-const rows = [
-  createData(0, 'Física', 'FI1', 3),
-  createData(1, 'Física', 'FI1', 3),
-  createData(3, 'Física', 'FI1', 3),
-]
+import { CircularProgress, Grid } from '@mui/material'
 
 function preventDefault(event: React.MouseEvent) {
   event.preventDefault()
 }
 
-export default function Courses() {
+export default function Courses({ courses }: { courses: Course[] }) {
   return (
     <React.Fragment>
-      <Title>Recent Orders</Title>
-      <Table size="small">
-        <TableHead>
-          <TableRow>
-            <TableCell>Id</TableCell>
-            <TableCell>Curso</TableCell>
-            <TableCell>Clave Curso</TableCell>
-            <TableCell>Cantidad de estudiantes</TableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {rows.map((row) => (
-            <TableRow key={row.id}>
-              <TableCell>{row.id}</TableCell>
-              <TableCell>{row.course}</TableCell>
-              <TableCell>{row.courseName}</TableCell>
-              <TableCell>{row.studentAmount}</TableCell>
+      <Title>Cursos</Title>
+      {courses !== undefined ? (
+        <Table size="small">
+          <TableHead>
+            <TableRow>
+              <TableCell>Id</TableCell>
+              <TableCell>Curso</TableCell>
+              <TableCell>Clave Curso</TableCell>
+              <TableCell>Nombre del profesor</TableCell>
+              <TableCell>Código el Aula</TableCell>
+              <TableCell>Tiene proyector</TableCell>
             </TableRow>
-          ))}
-        </TableBody>
-      </Table>
-      <Link color="primary" href="#" onClick={preventDefault} sx={{ mt: 3 }}>
-        See more orders
-      </Link>
+          </TableHead>
+          <TableBody>
+            {courses.map((row) => (
+              <TableRow key={row.courseName}>
+                <TableCell>{row.id}</TableCell>
+                <TableCell>{row.courseName}</TableCell>
+                <TableCell>{row.courseTagId}</TableCell>
+                <TableCell>{row.professorName}</TableCell>
+                <TableCell>{row.classRoomCode}</TableCell>
+                <TableCell>{row.hasProjector ? 'Sí' : 'No'}</TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      ) : (
+        <Grid
+          item
+          container
+          alignItems="center"
+          justifyContent="center"
+          height={150}
+          width="100%"
+        >
+          <CircularProgress />
+        </Grid>
+      )}
     </React.Fragment>
   )
 }

@@ -8,6 +8,9 @@ import Box from '@mui/material/Box'
 import { useForm, Controller } from 'react-hook-form'
 import Typography from '@mui/material/Typography'
 import Container from '@mui/material/Container'
+import { withIronSessionSsr } from 'iron-session/next'
+import withUserSession from 'utils/serverSide/withUserSession'
+import { sessionOptions } from 'lib/session'
 import paths from 'routes/paths'
 
 export default function SignIn() {
@@ -95,3 +98,8 @@ export default function SignIn() {
     </Container>
   )
 }
+
+export const getServerSideProps = withIronSessionSsr(
+  withUserSession,
+  sessionOptions,
+)

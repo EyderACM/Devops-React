@@ -9,8 +9,13 @@ import Typography from '@mui/material/Typography'
 import Container from '@mui/material/Container'
 import paths from 'routes/paths'
 import { useForm, Controller } from 'react-hook-form'
+import { withIronSessionSsr } from 'iron-session/next'
+import withUserSession from 'utils/serverSide/withUserSession'
+import { sessionOptions } from 'lib/session'
+import router, { useRouter } from 'next/router'
 
 export default function SignIn() {
+  const router = useRouter()
   const { control, handleSubmit, reset } = useForm()
 
   const onSubmit = handleSubmit(async (data) => {
@@ -19,8 +24,12 @@ export default function SignIn() {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(data),
     })
-    const rawResult = await result.json()
-    console.log(rawResult)
+    const login = await fetch('/api/login', {
+      method: 'post',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(data),
+    })
+    router.push(paths.general.dashboard)
   })
 
   return (
@@ -95,3 +104,8 @@ export default function SignIn() {
     </Container>
   )
 }
+
+export const getServerSideProps = withIronSessionSsr(
+  withUserSession,
+  sessionOptions,
+)

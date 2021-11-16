@@ -10,35 +10,18 @@ import Typography from '@mui/material/Typography'
 import Divider from '@mui/material/Divider'
 import IconButton from '@mui/material/IconButton'
 import Badge from '@mui/material/Badge'
-import Link from '@mui/material/Link'
 import MenuIcon from '@mui/icons-material/Menu'
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft'
 import NotificationsIcon from '@mui/icons-material/Notifications'
-import Grid from '@mui/material/Grid'
-import Paper from '@mui/material/Paper'
-import Courses from 'components/molecules/Courses'
 import {
-  mainListItems,
-  secondaryListItems,
-} from 'components/molecules/ListItems'
-
-function Copyright(props: any) {
-  return (
-    <Typography
-      variant="body2"
-      color="text.secondary"
-      align="center"
-      {...props}
-    >
-      {'Copyright © '}
-      <Link color="inherit" href="https://mui.com/">
-        Your Website
-      </Link>{' '}
-      {new Date().getFullYear()}
-      {'.'}
-    </Typography>
-  )
-}
+  ListItem,
+  ListItemButton,
+  ListItemIcon,
+  ListItemText,
+} from '@mui/material'
+import DashboardIcon from '@mui/icons-material/Dashboard'
+import { useRouter } from 'next/router'
+import paths from 'routes/paths'
 
 const drawerWidth: number = 240
 
@@ -92,7 +75,14 @@ const Drawer = styled(MuiDrawer, {
 
 const mdTheme = createTheme()
 
-function DashboardContent() {
+const DashboardItemIcon = (
+  <ListItemIcon>
+    <DashboardIcon />
+  </ListItemIcon>
+)
+
+function DashboardWrapper({ children }: { children: React.ReactNode }) {
+  const router = useRouter()
   const [open, setOpen] = React.useState(true)
   const toggleDrawer = () => {
     setOpen(!open)
@@ -127,7 +117,7 @@ function DashboardContent() {
               noWrap
               sx={{ flexGrow: 1 }}
             >
-              Dashboard
+              SICEI UADY
             </Typography>
             <IconButton color="inherit">
               <Badge badgeContent={4} color="secondary">
@@ -150,9 +140,24 @@ function DashboardContent() {
             </IconButton>
           </Toolbar>
           <Divider />
-          <List>{mainListItems}</List>
-          <Divider />
-          <List>{secondaryListItems}</List>
+          <List>
+            <ListItemButton onClick={() => router.push(paths.dashboard.root)}>
+              {DashboardItemIcon}
+              <ListItemText primary="Dashboard" />
+            </ListItemButton>
+            <ListItemButton
+              onClick={() => router.push(paths.dashboard.students)}
+            >
+              {DashboardItemIcon}
+              <ListItemText primary="Estudiantes" />
+            </ListItemButton>
+            <ListItemButton
+              onClick={() => router.push(paths.dashboard.courses)}
+            >
+              {DashboardItemIcon}
+              <ListItemText primary="Cursos" />
+            </ListItemButton>
+          </List>
         </Drawer>
         <Box
           component="main"
@@ -167,17 +172,11 @@ function DashboardContent() {
           }}
         >
           <Toolbar />
-          <Grid item xs={12}>
-            <Paper sx={{ p: 2, display: 'flex', flexDirection: 'column' }}>
-              <Courses />
-            </Paper>
-          </Grid>
+          {children}
         </Box>
       </Box>
     </ThemeProvider>
   )
 }
 
-export default function Dashboard() {
-  return <DashboardContent />
-}
+export default DashboardWrapper

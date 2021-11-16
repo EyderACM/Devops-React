@@ -352,6 +352,11 @@
     "@hapi/cryptiles" "5.x.x"
     "@hapi/hoek" "9.x.x"
 
+"@hookform/resolvers@^2.8.3":
+  "integrity" "sha512-9G6/vCUNvg3O4MeAK4l749syOz/2r1DF/Pq3Njuk3sI4ObHoRyV0nxio5NrNLGC+7N1Ixu9vJ/loNhaUNXTX6A=="
+  "resolved" "https://registry.npmjs.org/@hookform/resolvers/-/resolvers-2.8.3.tgz"
+  "version" "2.8.3"
+
 "@humanwhocodes/config-array@^0.5.0":
   "integrity" "sha512-FagtKFz74XrTl7y6HCzQpwDfXP0yhxe9lHLD1UZxjvZIcbyRz8zTFF/yYNfSfzU414eDwZ1SrO0Qvtyf+wFMQg=="
   "resolved" "https://registry.npmjs.org/@humanwhocodes/config-array/-/config-array-0.5.0.tgz"
@@ -2919,7 +2924,7 @@
     "object-assign" "^4.1.1"
     "scheduler" "^0.20.2"
 
-"react-hook-form@^7.19.2":
+"react-hook-form@^7.0.0", "react-hook-form@^7.19.2":
   "integrity" "sha512-XFsfgn0vY61AmbGonJyvbqRQ7du0hrvMBIv8nVgA8JjXX2RSNAnlSLYJeXM6TDBFBccgH6HknRIkgCD4E2/M8A=="
   "resolved" "https://registry.npmjs.org/react-hook-form/-/react-hook-form-7.19.2.tgz"
   "version" "7.19.2"
