@@ -9,11 +9,13 @@ import { Course } from 'pages/dashboard/courses'
 import Title from '../atoms/Title'
 import { CircularProgress, Grid } from '@mui/material'
 
-function preventDefault(event: React.MouseEvent) {
-  event.preventDefault()
-}
-
-export default function Courses({ courses }: { courses: Course[] }) {
+export default function Courses({
+  courses,
+  onRowClick,
+}: {
+  courses: Course[]
+  onRowClick: (id: number) => () => void
+}) {
   return (
     <React.Fragment>
       <Title>Cursos</Title>
@@ -31,7 +33,11 @@ export default function Courses({ courses }: { courses: Course[] }) {
           </TableHead>
           <TableBody>
             {courses.map((row) => (
-              <TableRow key={row.courseName}>
+              <TableRow
+                onClick={onRowClick(row.id)}
+                key={`${row.courseName}-${row.courseTagId}`}
+                hover
+              >
                 <TableCell>{row.id}</TableCell>
                 <TableCell>{row.courseName}</TableCell>
                 <TableCell>{row.courseTagId}</TableCell>

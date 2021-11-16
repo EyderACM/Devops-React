@@ -1,4 +1,4 @@
-import { Fragment, useEffect, useState } from 'react'
+import { Fragment, useEffect, useMemo, useState } from 'react'
 import Grid from '@mui/material/Grid'
 import * as Yup from 'yup'
 import { withIronSessionSsr } from 'iron-session/next'
@@ -12,6 +12,7 @@ import { useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup/dist/yup'
 import CourseDialog from 'components/organisms/CoursesDialog'
 import requiredString from 'utils/functions/requiredString'
+import useAuthenticatedSWR from 'hooks/useAuthenticatedSWR'
 
 export interface Course {
   id: number
@@ -35,36 +36,62 @@ const coursesSchema: Yup.SchemaOf<FormCourse> = Yup.object().shape({
 function CoursesDashboard({
   user,
 }: InferGetServerSidePropsType<typeof getServerSideProps>) {
-  const [courses, setCourses] = useState<Course[]>()
+  const authorization = useMemo(() => user?.login, [user])
+  const [editedId, setEditedId] = useState<number | undefined>(undefined)
+  const { data: courses, mutate } = useAuthenticatedSWR<Course>({
+    path: 'courses',
+    token: authorization,
+  })
   const [open, setOpen] = useState<boolean>(false)
   const {
     control,
     handleSubmit,
-    formState: { errors },
+    reset,
+    formState: { errors, isSubmitting },
   } = useForm<FormCourse>({
     resolver: yupResolver(coursesSchema),
   })
 
   useEffect(() => {
-    const fetchCourses = async () => {
-      const authorization = `Bearer ${user?.login || ''}`
-
-      const rawCourses = await fetch('http://localhost:8080/api/courses', {
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json',
-          authorization,
-        },
-      })
-      const coursesDto = (await rawCourses.json()) as Course[]
-      setCourses(coursesDto)
+    if (open === false) {
+      reset({})
+      setEditedId(undefined)
     }
-    fetchCourses()
-  }, [])
+  }, [open])
 
-  const onSubmit = handleSubmit((data) => {
-    console.log(data)
+  const onSubmit = handleSubmit(async (data) => {
+    const method = editedId ? 'PUT' : 'POST'
+    const baseUrl = 'http://localhost:8080/api/courses'
+
+    const requestUrl = editedId ? `${baseUrl}/${editedId}` : baseUrl
+
+    await fetch(requestUrl, {
+      method: method,
+      headers: {
+        'Content-Type': 'application/json',
+        authorization: `Bearer ${authorization}` || '',
+      },
+      body: JSON.stringify(data),
+    })
+    mutate()
+    setOpen(false)
+    reset({})
   })
+
+  const onClickCourse = (id: number) => async () => {
+    reset({})
+    setEditedId(id)
+    setOpen(true)
+    const rawCourse = await fetch(`http://localhost:8080/api/courses/${id}`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        authorization: `Bearer ${authorization}` || '',
+      },
+    })
+    const course = (await rawCourse.json()) as Course
+    reset(course)
+  }
 
   return (
     <Fragment>
@@ -74,6 +101,8 @@ function CoursesDashboard({
         formControl={control}
         onSubmit={onSubmit}
         errors={errors}
+        isSubmitting={isSubmitting}
+        editMode={!!editedId}
       />
       <DashboardWrapper>
         <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
@@ -84,7 +113,7 @@ function CoursesDashboard({
               </Button>
             </Grid>
             <Paper sx={{ p: 2, display: 'flex', flexDirection: 'column' }}>
-              <Courses courses={courses!} />
+              <Courses courses={courses!} onRowClick={onClickCourse} />
             </Paper>
           </Grid>
         </Container>

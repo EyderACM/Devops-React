@@ -5,9 +5,11 @@ import Dialog from '@mui/material/Dialog'
 import DialogActions from '@mui/material/DialogActions'
 import DialogContent from '@mui/material/DialogContent'
 import DialogTitle from '@mui/material/DialogTitle'
-import { FormControlLabel, Switch } from '@mui/material'
+import { FormControlLabel, Skeleton, Switch } from '@mui/material'
 import { Controller, UseFormReturn } from 'react-hook-form'
 import { FormCourse } from 'pages/dashboard/courses'
+import LoadingButton from '@mui/lab/LoadingButton'
+import { If, Then, Else } from 'react-if'
 
 interface ICourseDialog {
   open: boolean
@@ -15,6 +17,8 @@ interface ICourseDialog {
   onSubmit: any
   formControl: UseFormReturn<FormCourse>['control']
   errors: UseFormReturn['formState']['errors']
+  isSubmitting: boolean
+  editMode: boolean
 }
 
 interface IControlledTextField {
@@ -22,6 +26,7 @@ interface IControlledTextField {
   name: keyof FormCourse
   label: string
   errors: ICourseDialog['errors']
+  isBeingEdited: boolean
 }
 
 const defaultConfig: TextFieldProps = {
@@ -38,6 +43,7 @@ function ControlledTextField({
   name,
   label,
   errors,
+  isBeingEdited,
 }: IControlledTextField) {
   return (
     <Controller
@@ -48,6 +54,13 @@ function ControlledTextField({
           id={field.name}
           label={label}
           error={Boolean(errors[field.name])}
+          helperText={errors[field.name]?.message}
+          disabled={
+            !(!isBeingEdited || (field.value !== undefined && isBeingEdited))
+          }
+          InputLabelProps={{
+            shrink: field.value !== undefined || isBeingEdited,
+          }}
           {...field}
           {...defaultConfig}
         />
@@ -62,7 +75,16 @@ function CourseDialog({
   onSubmit,
   formControl,
   errors,
+  isSubmitting,
+  editMode,
 }: ICourseDialog) {
+  const isFormBeingEdited = React.useMemo(() => !!editMode, [editMode])
+  const textFieldConfig = {
+    formControl: formControl,
+    errors,
+    isBeingEdited: isFormBeingEdited,
+  }
+
   const handleClose = () => {
     setOpen(false)
   }
@@ -73,27 +95,23 @@ function CourseDialog({
       <DialogContent>
         <ControlledTextField
           name="courseName"
-          formControl={formControl}
           label="Nombre del curso"
-          errors={errors}
+          {...textFieldConfig}
         />
         <ControlledTextField
           name="courseTagId"
-          formControl={formControl}
           label="Clave del curso"
-          errors={errors}
+          {...textFieldConfig}
         />
         <ControlledTextField
           name="professorName"
-          formControl={formControl}
           label="Nombre del profesor"
-          errors={errors}
+          {...textFieldConfig}
         />
         <ControlledTextField
           name="classRoomCode"
-          formControl={formControl}
           label="Clave del aula"
-          errors={errors}
+          {...textFieldConfig}
         />
         <Controller
           control={formControl}
@@ -116,7 +134,13 @@ function CourseDialog({
       </DialogContent>
       <DialogActions>
         <Button onClick={handleClose}>Cancelar</Button>
-        <Button onClick={onSubmit}>Crear</Button>
+        <LoadingButton
+          variant="contained"
+          onClick={onSubmit}
+          loading={isSubmitting}
+        >
+          {isFormBeingEdited ? 'Editar' : 'Crear'}
+        </LoadingButton>
       </DialogActions>
     </Dialog>
   )
