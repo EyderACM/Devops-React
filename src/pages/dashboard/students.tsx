@@ -26,7 +26,9 @@ export interface Student {
   course: Course
 }
 
-export type FormStudent = Omit<Student, 'enrollmentId' | 'course'>
+export type FormStudent = Omit<Student, 'enrollmentId' | 'course'> & {
+  courseId: number
+}
 
 const studentSchema: Yup.SchemaOf<FormStudent> = Yup.object().shape({
   firstNames: requiredString('El nombre es requerido'),
@@ -34,6 +36,7 @@ const studentSchema: Yup.SchemaOf<FormStudent> = Yup.object().shape({
   birthDate: Yup.date().required('La fecha es requerida'),
   sex: requiredString('Definir el sexo es requerido'),
   enrollmentDate: Yup.date().required('La fecha es requerida'),
+  courseId: Yup.number().required('El curso es requerido'),
 })
 
 function StudentsDashboard({
@@ -56,14 +59,11 @@ function StudentsDashboard({
     control,
     handleSubmit,
     reset,
+    setValue,
     formState: { errors, isSubmitting },
   } = useForm<FormStudent>({
     resolver: yupResolver(studentSchema),
   })
-
-  useEffect(() => {
-    console.log(authorization)
-  }, [students])
 
   useEffect(() => {
     if (openStudentDialog === false) {
@@ -77,6 +77,7 @@ function StudentsDashboard({
     const baseUrl = 'http://localhost:8080/api/students'
 
     const requestUrl = editedId ? `${baseUrl}/${editedId}` : baseUrl
+    const { course, ...restOfData } = data as any
 
     await fetch(requestUrl, {
       method: method,
@@ -84,7 +85,7 @@ function StudentsDashboard({
         'Content-Type': 'application/json',
         authorization: `Bearer ${authorization}` || '',
       },
-      body: JSON.stringify(data),
+      body: JSON.stringify({ ...restOfData, course: restOfData.courseId }),
     })
     mutate()
     setOpenStudentDialog(false)
@@ -95,15 +96,15 @@ function StudentsDashboard({
     reset({})
     setEditedId(id)
     setOpenStudentDialog(true)
-    const rawCourse = await fetch(`http://localhost:8080/api/students/${id}`, {
+    const rawStudent = await fetch(`http://localhost:8080/api/students/${id}`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
         authorization: `Bearer ${authorization}` || '',
       },
     })
-    const course = (await rawCourse.json()) as Student
-    reset(course)
+    const student = (await rawStudent.json()) as Student
+    reset({ ...student, courseId: student.course.id })
   }
 
   const onOpenDeleteStudentDialog = (id: number) => async (e: any) => {
