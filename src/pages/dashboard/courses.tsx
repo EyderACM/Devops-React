@@ -104,17 +104,22 @@ function CoursesDashboard({
 
   const onDeleteCourse = async () => {
     setIsDeletingCourse(true)
-    await fetch(`http://localhost:8080/api/courses/${editedId}`, {
-      method: 'DELETE',
-      headers: {
-        'Content-Type': 'application/json',
-        authorization: `Bearer ${authorization}` || '',
-      },
-    })
-    setIsDeletingCourse(false)
-    setOpenDeleteDialog(false)
-    setEditedId(undefined)
-    mutate()
+    try {
+      await fetch(`http://localhost:8080/api/courses/${editedId}`, {
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json',
+          authorization: `Bearer ${authorization}` || '',
+        },
+      })
+      mutate()
+    } catch (error) {
+      console.log(error)
+    } finally {
+      setEditedId(undefined)
+      setIsDeletingCourse(false)
+      setOpenDeleteDialog(false)
+    }
   }
 
   return (

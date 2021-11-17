@@ -9,65 +9,10 @@ import { FormControlLabel, Skeleton, Switch } from '@mui/material'
 import { Controller, UseFormReturn } from 'react-hook-form'
 import { FormCourse } from 'pages/dashboard/courses'
 import LoadingButton from '@mui/lab/LoadingButton'
-import { If, Then, Else } from 'react-if'
+import IEntityDialog from 'types/entityDialog'
+import ControlledTextField from 'components/molecules/ControlledTextField'
 
-interface ICourseDialog {
-  open: boolean
-  setOpen: (value: boolean) => void
-  onSubmit: any
-  formControl: UseFormReturn<FormCourse>['control']
-  errors: UseFormReturn['formState']['errors']
-  isSubmitting: boolean
-  editMode: boolean
-}
-
-interface IControlledTextField {
-  formControl: ICourseDialog['formControl']
-  name: keyof FormCourse
-  label: string
-  errors: ICourseDialog['errors']
-  isBeingEdited: boolean
-}
-
-const defaultConfig: TextFieldProps = {
-  type: 'text',
-  fullWidth: true,
-  variant: 'standard',
-  autoFocus: true,
-  margin: 'dense',
-  required: true,
-}
-
-function ControlledTextField({
-  formControl,
-  name,
-  label,
-  errors,
-  isBeingEdited,
-}: IControlledTextField) {
-  return (
-    <Controller
-      control={formControl}
-      name={name}
-      render={({ field }) => (
-        <TextField
-          id={field.name}
-          label={label}
-          error={Boolean(errors[field.name])}
-          helperText={errors[field.name]?.message}
-          disabled={
-            !(!isBeingEdited || (field.value !== undefined && isBeingEdited))
-          }
-          InputLabelProps={{
-            shrink: field.value !== undefined || isBeingEdited,
-          }}
-          {...field}
-          {...defaultConfig}
-        />
-      )}
-    />
-  )
-}
+type ICourseDialog = IEntityDialog<FormCourse>
 
 function CourseDialog({
   open,

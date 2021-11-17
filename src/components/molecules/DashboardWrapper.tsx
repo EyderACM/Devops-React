@@ -122,6 +122,7 @@ function DashboardWrapper({ children }: { children: React.ReactNode }) {
             <IconButton color="inherit">
               <Badge badgeContent={4} color="secondary">
                 <NotificationsIcon />
+                ToAddLogout
               </Badge>
             </IconButton>
           </Toolbar>
