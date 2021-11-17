@@ -22,9 +22,7 @@
     "react-hook-form": "^7.19.2",
     "react-if": "^4.1.1",
     "swr": "^1.0.1",
-    "yup": "^0.32.11"
-  },
-  "peerDependencies": {
+    "yup": "^0.32.11",
     "@material-ui/pickers": "^3.3.10",
     "@material-ui/lab": "^4.0.0-alpha.60",
     "@mui/icons-material": "^5.1.0",
