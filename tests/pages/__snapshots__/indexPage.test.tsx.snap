@@ -1,0 +1,162 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders correctly 1`] = `
+<main
+  className="MuiContainer-root MuiContainer-maxWidthXs css-nzinn5-MuiContainer-root"
+>
+  <div
+    className="MuiBox-root css-2yalpz"
+  >
+    <h1
+      className="MuiTypography-root MuiTypography-h5 css-ag7rrr-MuiTypography-root"
+    >
+      ¡Bienvenido!
+    </h1>
+    <form
+      className="MuiBox-root css-164r41r"
+      noValidate={true}
+      onSubmit={[Function]}
+    >
+      <div
+        className="MuiFormControl-root MuiFormControl-marginNormal MuiFormControl-fullWidth MuiTextField-root css-17vbkzs-MuiFormControl-root-MuiTextField-root"
+      >
+        <label
+          className="MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-outlined MuiFormLabel-root MuiFormLabel-colorPrimary Mui-required css-14s5rfu-MuiFormLabel-root-MuiInputLabel-root"
+          data-shrink={false}
+          htmlFor="username"
+          id="username-label"
+        >
+          Nombre de usuario
+          <span
+            aria-hidden={true}
+            className="MuiInputLabel-asterisk MuiFormLabel-asterisk css-wgai2y-MuiFormLabel-asterisk"
+          >
+             
+            *
+          </span>
+        </label>
+        <div
+          className="MuiOutlinedInput-root MuiInputBase-root MuiInputBase-colorPrimary MuiInputBase-fullWidth MuiInputBase-formControl css-md26zr-MuiInputBase-root-MuiOutlinedInput-root"
+          onClick={[Function]}
+        >
+          <input
+            aria-invalid={false}
+            autoComplete="text"
+            autoFocus={true}
+            className="MuiOutlinedInput-input MuiInputBase-input css-1t8l2tu-MuiInputBase-input-MuiOutlinedInput-input"
+            disabled={false}
+            id="username"
+            name="text"
+            onAnimationStart={[Function]}
+            onBlur={[Function]}
+            onChange={[Function]}
+            onFocus={[Function]}
+            required={true}
+            type="text"
+          />
+          <fieldset
+            aria-hidden={true}
+            className="MuiOutlinedInput-notchedOutline css-1d3z3hw-MuiOutlinedInput-notchedOutline"
+          >
+            <legend
+              className="css-173wfxe"
+            >
+              <span>
+                Nombre de usuario
+                 *
+              </span>
+            </legend>
+          </fieldset>
+        </div>
+      </div>
+      <div
+        className="MuiFormControl-root MuiFormControl-marginNormal MuiFormControl-fullWidth MuiTextField-root css-17vbkzs-MuiFormControl-root-MuiTextField-root"
+      >
+        <label
+          className="MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-outlined MuiFormLabel-root MuiFormLabel-colorPrimary Mui-required css-14s5rfu-MuiFormLabel-root-MuiInputLabel-root"
+          data-shrink={false}
+          htmlFor="password"
+          id="password-label"
+        >
+          Password
+          <span
+            aria-hidden={true}
+            className="MuiInputLabel-asterisk MuiFormLabel-asterisk css-wgai2y-MuiFormLabel-asterisk"
+          >
+             
+            *
+          </span>
+        </label>
+        <div
+          className="MuiOutlinedInput-root MuiInputBase-root MuiInputBase-colorPrimary MuiInputBase-fullWidth MuiInputBase-formControl css-md26zr-MuiInputBase-root-MuiOutlinedInput-root"
+          onClick={[Function]}
+        >
+          <input
+            aria-invalid={false}
+            autoComplete="current-password"
+            autoFocus={false}
+            className="MuiOutlinedInput-input MuiInputBase-input css-1t8l2tu-MuiInputBase-input-MuiOutlinedInput-input"
+            disabled={false}
+            id="password"
+            name="Contraseña"
+            onAnimationStart={[Function]}
+            onBlur={[Function]}
+            onChange={[Function]}
+            onFocus={[Function]}
+            required={true}
+            type="password"
+          />
+          <fieldset
+            aria-hidden={true}
+            className="MuiOutlinedInput-notchedOutline css-1d3z3hw-MuiOutlinedInput-notchedOutline"
+          >
+            <legend
+              className="css-173wfxe"
+            >
+              <span>
+                Password
+                 *
+              </span>
+            </legend>
+          </fieldset>
+        </div>
+      </div>
+      <button
+        className="MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeMedium MuiButton-containedSizeMedium MuiButton-fullWidth MuiButtonBase-root  css-1vhaqj4-MuiButtonBase-root-MuiButton-root"
+        disabled={false}
+        onBlur={[Function]}
+        onContextMenu={[Function]}
+        onDragLeave={[Function]}
+        onFocus={[Function]}
+        onKeyDown={[Function]}
+        onKeyUp={[Function]}
+        onMouseDown={[Function]}
+        onMouseLeave={[Function]}
+        onMouseUp={[Function]}
+        onTouchEnd={[Function]}
+        onTouchMove={[Function]}
+        onTouchStart={[Function]}
+        tabIndex={0}
+        type="submit"
+      >
+        Iniciar sesión
+      </button>
+      <div
+        className="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-undefined css-11lq3yg-MuiGrid-root"
+      >
+        <div
+          className="MuiGrid-root MuiGrid-item css-13i4rnv-MuiGrid-root"
+        >
+          <a
+            href="/sign-up"
+            onClick={[Function]}
+            onMouseEnter={[Function]}
+          >
+            No tienes una cuenta? Crea tu cuenta
+          </a>
+        </div>
+      </div>
+    </form>
+  </div>
+</main>
+`;
