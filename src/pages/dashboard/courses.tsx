@@ -64,7 +64,7 @@ function CoursesDashboard({
 
   const onSubmit = handleSubmit(async (data) => {
     const method = editedId ? 'PUT' : 'POST'
-    const baseUrl = 'http://localhost:8080/api/courses'
+    const baseUrl = 'http://host.docker.internal:8080/api/courses'
 
     const requestUrl = editedId ? `${baseUrl}/${editedId}` : baseUrl
 
@@ -85,7 +85,7 @@ function CoursesDashboard({
     reset({})
     setEditedId(id)
     setOpenCourseDialog(true)
-    const rawCourse = await fetch(`http://localhost:8080/api/courses/${id}`, {
+    const rawCourse = await fetch(`http://host.docker.internal:8080/api/courses/${id}`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
@@ -105,7 +105,7 @@ function CoursesDashboard({
   const onDeleteCourse = async () => {
     setIsDeletingCourse(true)
     try {
-      await fetch(`http://localhost:8080/api/courses/${editedId}`, {
+      await fetch(`http://host.docker.internal:8080/api/courses/${editedId}`, {
         method: 'DELETE',
         headers: {
           'Content-Type': 'application/json',

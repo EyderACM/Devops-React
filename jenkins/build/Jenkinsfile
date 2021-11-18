@@ -1,0 +1,29 @@
+
+pipeline {
+    agent any
+    stages {
+        stage('checkout') {
+            steps {
+                echo "checking out project"
+                git branch: 'main', credentialsId: 'github-token', url: 'https://github.com/EyderACM/Devops-React.git'
+                echo "${BUILD_NUMBER} is the build number"
+                echo "${GIT_BRANCH} checked out"
+            }
+        }
+
+        stage('build') {
+            steps {
+                bat "docker build -t frontend:${GIT_BRANCH}-${BUILD_NUMBER} ."
+                bat "docker build -t webserver:${GIT_BRANCH}-${BUILD_NUMBER} .\\nginx\\ "
+                 bat "npm run test"
+            }
+        }
+
+    }
+    post {
+        success {
+            echo "Build success "
+            build job:'frontdeploy/'+GIT_BRANCH
+        }
+    }
+}
