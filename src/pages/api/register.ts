@@ -8,7 +8,7 @@ async function loginRoute(req: NextApiRequest, res: NextApiResponse) {
   const { username, password } = await req.body
 
   try {
-    const user = await fetch('http://localhost:8080/api/auth/signup', {
+    const user = await fetch('http://host.docker.internal:8080/api/auth/signup', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ username, password }),

@@ -15,6 +15,7 @@ pipeline {
             steps {
                 bat "docker build -t frontend:${GIT_BRANCH}-${BUILD_NUMBER} ."
                 bat "docker build -t webserver:${GIT_BRANCH}-${BUILD_NUMBER} .\\nginx\\ "
+                 bat "npm run test"
             }
         }
 

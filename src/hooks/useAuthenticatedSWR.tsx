@@ -24,7 +24,7 @@ const authenticationFetcher = async <T extends unknown>(
 function useAuthenticatedSWR<T>({ path, token = '' }: IUseAuthenticatedSWR) {
   const authToken = useMemo(() => `Bearer ${token}`, [token])
   const { data, mutate } = useSWR(
-    [`http://localhost:8080/api/${path}`, authToken],
+    [`http://host.docker.internal:8080/api/${path}`, authToken],
     authenticationFetcher,
   )
   const parsedData = data as T[]
