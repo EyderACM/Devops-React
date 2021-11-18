@@ -1,0 +1,20 @@
+pipeline {
+    agent any
+    stages {
+        stage('deploy') {
+            steps {
+                bat "docker rm -f webserver || echo 'warning: removing old webserver failed, maybe it doesnt exist?'"
+                bat "docker rm -f frontend || echo 'warning: removing old webserver failed, maybe it doesnt exist?'"
+                bat "docker run --name frontend -d -p 3000:3000 frontend:${GIT_BRANCH}-${BUILD_NUMBER}"
+                bat "docker run --name webserver --link frontend:frontend -d -p 8083:80 webserver:${GIT_BRANCH}-${BUILD_NUMBER} "
+            }
+        }
+    }
+    post {
+        success {
+            echo "Deploy success"
+            echo "${BUILD_NUMBER}"
+            
+        }
+    }
+}
