@@ -1,0 +1,47 @@
+<org.jenkinsci.plugins.workflow.multibranch.WorkflowMultiBranchProject plugin="workflow-multibranch@2.26">
+<actions/>
+<description/>
+<displayName>frontdeploy</displayName>
+<properties/>
+<folderViews class="jenkins.branch.MultiBranchProjectViewHolder" plugin="branch-api@2.7.0">
+<owner class="org.jenkinsci.plugins.workflow.multibranch.WorkflowMultiBranchProject" reference="../.."/>
+</folderViews>
+<healthMetrics/>
+<icon class="jenkins.branch.MetadataActionFolderIcon" plugin="branch-api@2.7.0">
+<owner class="org.jenkinsci.plugins.workflow.multibranch.WorkflowMultiBranchProject" reference="../.."/>
+</icon>
+<orphanedItemStrategy class="com.cloudbees.hudson.plugins.folder.computed.DefaultOrphanedItemStrategy" plugin="cloudbees-folder@6.16">
+<pruneDeadBranches>false</pruneDeadBranches>
+<daysToKeep>-1</daysToKeep>
+<numToKeep>-1</numToKeep>
+</orphanedItemStrategy>
+<triggers/>
+<disabled>false</disabled>
+<sources class="jenkins.branch.MultiBranchProject$BranchSourceList" plugin="branch-api@2.7.0">
+<data>
+<jenkins.branch.BranchSource>
+<source class="org.jenkinsci.plugins.github_branch_source.GitHubSCMSource" plugin="github-branch-source@2.11.3">
+<id>4b776f28-79b0-4711-95e6-fc52aea88428</id>
+<apiUri>https://api.github.com</apiUri>
+<credentialsId>github-token</credentialsId>
+<repoOwner>EyderACM</repoOwner>
+<repository>Devops-React</repository>
+<repositoryUrl>https://github.com/EyderACM/Devops-React</repositoryUrl>
+<traits>
+<org.jenkinsci.plugins.github__branch__source.BranchDiscoveryTrait>
+<strategyId>1</strategyId>
+</org.jenkinsci.plugins.github__branch__source.BranchDiscoveryTrait>
+</traits>
+</source>
+<strategy class="jenkins.branch.DefaultBranchPropertyStrategy">
+<properties class="empty-list"/>
+</strategy>
+</jenkins.branch.BranchSource>
+</data>
+<owner class="org.jenkinsci.plugins.workflow.multibranch.WorkflowMultiBranchProject" reference="../.."/>
+</sources>
+<factory class="org.jenkinsci.plugins.workflow.multibranch.WorkflowBranchProjectFactory">
+<owner class="org.jenkinsci.plugins.workflow.multibranch.WorkflowMultiBranchProject" reference="../.."/>
+<scriptPath>jenkins/deploy/Jenkinsfile</scriptPath>
+</factory>
+</org.jenkinsci.plugins.workflow.multibranch.WorkflowMultiBranchProject>
