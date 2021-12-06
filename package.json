@@ -16,9 +16,9 @@
     "@hookform/resolvers": "^2.8.3",
     "@material-ui/lab": "^4.0.0-alpha.60",
     "@material-ui/pickers": "^3.3.10",
-    "@mui/icons-material": "^5.1.1",
-    "@mui/lab": "^5.0.0-alpha.55",
-    "@mui/material": "^5.1.1",
+    "@mui/icons-material": "^5.1.0",
+    "@mui/lab": "^5.0.0-alpha.54",
+    "@mui/material": "^5.1.0",
     "date-fns": "^2.25.0",
     "iron-session": "^6.0.2",
     "next": "12.0.3",
@@ -31,8 +31,8 @@
     "yup": "^0.32.11"
   },
   "peerDependencies": {
-    "@material-ui/pickers": "^3.3.10",
     "@material-ui/lab": "^4.0.0-alpha.60",
+    "@material-ui/pickers": "^3.3.10",
     "@mui/icons-material": "^5.1.0",
     "@mui/lab": "^5.0.0-alpha.54",
     "@mui/material": "^5.1.0"
@@ -43,7 +43,7 @@
     "@babel/preset-typescript": "^7.16.0",
     "@testing-library/react": "^12.1.2",
     "@types/jest": "^27.0.2",
-    "@types/node": "16.11.7",
+    "@types/node": "^16.11.7",
     "@types/react": "17.0.34",
     "@types/react-test-renderer": "^17.0.1",
     "babel-jest": "^27.3.1",
