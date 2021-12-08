@@ -74,7 +74,7 @@ function StudentsDashboard({
 
   const onSubmit = handleSubmit(async (data) => {
     const method = editedId ? 'PUT' : 'POST'
-    const baseUrl = `http://192.168.1.137:8080/api/students`
+    const baseUrl = `http://artrune.com:8080/api/students`
 
     const requestUrl = editedId ? `${baseUrl}/${editedId}` : baseUrl
     const { course, ...restOfData } = data as any
@@ -96,7 +96,7 @@ function StudentsDashboard({
     reset({})
     setEditedId(id)
     setOpenStudentDialog(true)
-    const rawStudent = await fetch(`http://192.168.1.137:8080/api/students/${id}`, {
+    const rawStudent = await fetch(`http://artrune.com:8080/api/students/${id}`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
@@ -116,7 +116,7 @@ function StudentsDashboard({
   const onDeleteStudent = async () => {
     setIsDeletingStudent(true)
     try {
-      await fetch(`http://192.168.1.137:8080/api/students/${editedId}`, {
+      await fetch(`http://artrune.com:8080/api/students/${editedId}`, {
         method: 'DELETE',
         headers: {
           'Content-Type': 'application/json',
