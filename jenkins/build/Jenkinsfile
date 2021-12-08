@@ -12,6 +12,7 @@ pipeline {
                 bat """ssh -i "./ssh_key" transpara@192.168.1.114 "git clone https://github.com/EyderACM/Devops-React.git" """
                 bat """ssh -i "./ssh_key" transpara@192.168.1.114 "cd Devops-React && npm install --production=false """
                 bat """ssh -i "./ssh_key" transpara@192.168.1.114 "cd Devops-React && npm run build" """
+                bat """ssh -i "./ssh_key" transpara@192.168.1.114 "cd Devops-React && npm run test" """
             }
         }
 
