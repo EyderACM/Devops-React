@@ -7,9 +7,9 @@ pipeline {
             steps {
                 echo "${BUILD_NUMBER} is the build number"
                 echo "${GIT_BRANCH} checked out"
-                bat "ssh -i \"C:\keys\ssh_key\" transpara@192.168.1.114 \"git clone https://github.com/EyderACM/Devops-React.git\""
-                bat "ssh -i \"C:\keys\ssh_key\" transpara@192.168.1.114 \"npm i\""
-                bat "ssh -i \"C:\keys\ssh_key\" transpara@192.168.1.114 \"npm run build\""
+                bat "ssh -i 'C:\keys\ssh_key' transpara@192.168.1.114 'git clone https://github.com/EyderACM/Devops-React.git'"
+                bat "ssh -i 'C:\keys\ssh_key' transpara@192.168.1.114 'npm i'"
+                bat "ssh -i 'C:\keys\ssh_key' transpara@192.168.1.114 'npm run build'"
             }
         }
 
