@@ -4,7 +4,7 @@ pipeline {
         stage('deploy') {
             steps {
                 bat """ssh -i "./ssh_key" transpara@192.168.1.114 "killall node || echo 'not running'" """ 
-                bat """ssh -i "./ssh_key" transpara@192.168.1.114 "(cd Devops-React && npm run start&)" """
+                bat """ssh -i "./ssh_key" transpara@192.168.1.114 "cd Devops-React && DISPLAY=:0 nohup npm run start < /dev/null > std.out 2> std.err &" """
                 bat """ssh -i "./ssh_key" transpara@192.168.1.114 "killall ngrok || echo 'not running'" """
                 bat """ssh -i "./ssh_key" transpara@192.168.1.114 "./ngrok http 80 > /dev/null &" """
                 bat """ssh -i "./ssh_key" transpara@192.168.1.114 "curl http://localhost:4040/api/tunnels" """
