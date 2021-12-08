@@ -3,10 +3,11 @@ pipeline {
     stages {
         stage('deploy') {
             steps {
-                bat "docker rm -f webserver || echo 'warning: removing old webserver failed, maybe it doesnt exist?'"
-                bat "docker rm -f frontend || echo 'warning: removing old webserver failed, maybe it doesnt exist?'"
-                bat "docker run --name frontend -d -p 3000:3000 frontend:${GIT_BRANCH}-${BUILD_NUMBER}"
-                bat "docker run --name webserver --link frontend:frontend -d -p 8083:80 webserver:${GIT_BRANCH}-${BUILD_NUMBER} "
+                bat "ssh -i \"C:\keys\ssh_key\" transpara@192.168.1.114 \"killall node || node 'not running'\""
+                bat "ssh -i \"C:\keys\ssh_key\" transpara@192.168.1.114 \"(npm run start&)\""
+                bat "ssh -i \"C:\keys\ssh_key\" transpara@192.168.1.114 \"killall ngrok || echo 'not running'\""
+                bat "ssh -i \"C:\keys\ssh_key\" transpara@192.168.1.114 \"./ngrok http 80 > /dev/null &\""
+                bat "ssh -i \"C:\keys\ssh_key\" transpara@192.168.1.114 \"curl http://localhost:4040/api/tunnels\""
             }
         }
     }
