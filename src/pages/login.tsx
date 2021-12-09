@@ -89,7 +89,7 @@ export default function SignIn() {
           <Grid container>
             <Grid item>
               <Link href={`${paths.general.signUp}`}>
-                {'No tienes una cuenta? Crea tu cuenta'}
+                {'No tienes una cuenta? Crea tu cuentaaaaaaaaaaaaaaaaaaaa prueba'}
               </Link>
             </Grid>
           </Grid>
