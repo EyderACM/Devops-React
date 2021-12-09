@@ -95,7 +95,7 @@ export default function SignIn() {
           <Grid container>
             <Grid item>
               <Link href={`${paths.general.login}`}>
-                {'Tienes una cuenta? Inicia sesión'}
+                {'Tienes una cuenta? Inicia sesióasdfafsafdsan'}
               </Link>
             </Grid>
           </Grid>
